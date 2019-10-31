@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import javax.swing.ImageIcon;
 
-class Driver {
+public class Driver {
 	static enum Direction {
 		DOWN, UP, LEFT, RIGHT
 	};

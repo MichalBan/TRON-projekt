@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
  import org.junit.*;
+
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 
@@ -33,7 +34,7 @@ public class GameTests {
 
 	@Test
 	public void testAdjustTraceColor() {
-		DriverControl dc = new DriverControl(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
+		DriverController dc = new DriverController(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j<4; ++j) {
 				for(int k = 0; k<4; ++k) {
@@ -54,14 +55,14 @@ public class GameTests {
 
 	@Test
 	public void testDrive() {
-		DriverControl dc = new DriverControl(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
+		DriverController dc = new DriverController(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
 		dc.drive();
 		assertTrue(dc.d.location.x == -1);
 	}
 
 	@Test
 	public void testAdjustDriver() {
-		DriverControl dc = new DriverControl(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
+		DriverController dc = new DriverController(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
 		assert (dc.adjustDriver() == Driver.images[0]);
 		dc.changeColor(Driver.DColor.CYAN);
 		assert (dc.adjustDriver() == Driver.images[7]);
@@ -78,14 +79,14 @@ public class GameTests {
 
 	@Test
 	public void testChangeColor() {
-		DriverControl dc = new DriverControl(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
+		DriverController dc = new DriverController(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
 		dc.changeColor(Driver.DColor.CYAN);
 		assertTrue(dc.d.driverColor == Driver.DColor.CYAN);
 	}
 
 	@Test
 	public void testKeyListener() {
-		DriverControl dc = new DriverControl(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
+		DriverController dc = new DriverController(new Driver(new Point(0, 0), Driver.Direction.LEFT), 10, 11, 12, 13);
 		KeyEvent e = new KeyEvent(new JFrame(), KeyEvent.KEY_PRESSED, 1, 0, 10, KeyEvent.CHAR_UNDEFINED);
 		dc.keyPressed(e);
 		dc.drive();

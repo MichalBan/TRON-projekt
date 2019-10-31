@@ -3,6 +3,7 @@ package tst;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,7 +16,8 @@ public class MenuButton extends JButton {
 
 	static int location = -250;
 
-	MenuButton(String s, JFrame f, ActionListener a) {
+	
+	public MenuButton(String s, JFrame f, ActionListener a) {
 		super(s);
 		this.setFont(new Font("Arial", Font.PLAIN, 30));
 		this.setBounds(GameLoop.resolution / 2 - 100, GameLoop.resolution / 2 + MenuButton.location, 200, 50);
@@ -28,15 +30,9 @@ public class MenuButton extends JButton {
 		MenuButton.location += 100;
 	}
 
-	/**
-	 * <b>lol</b>
-	 * bbb
-	 * @param ticker
-	 * @param tickerBonus
-	 * @param drivers
-	 */
-	static void startGame(Timer ticker, Timer tickerBonus, DriverControl[] drivers) {
-		GameLoop.panel.addKeyListener(drivers[0]);
+	// TODO w GameLoop stwórz metodê, która doda listenera. 
+	static void startGame(Timer ticker, Timer tickerBonus, DriverController[] drivers) {
+		GameLoop.addKeyListenerToPanel(drivers[0]);
 		GameLoop.panel.addKeyListener(drivers[1]);
 		for (JButton p : GameLoop.buttons) {
 			p.setVisible(false);
@@ -45,16 +41,6 @@ public class MenuButton extends JButton {
 		if (GameLoop.bonusesActive)
 			tickerBonus.restart();
 		GameLoop.panel.requestFocusInWindow();
-	}
-
-	static void switchMenuColor() {
-		for (MenuButton p : GameLoop.buttons) {
-			p.setVisible(false);
-		}
-		for (ColorButton p : MenuColor.colorButtons) {
-			p.setVisible(true);
-		}
-		MenuColor.doneButton.setVisible(true);
 	}
 
 	static void switchBg() {

@@ -7,7 +7,6 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,20 +17,21 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-class GameLoop extends JFrame {
+// Rozbij na klasê z GUI i klasê, która tym zarz¹dza (tym = GUI i iinymi klasami).
+public class GameLoop extends JFrame {
 	final static int boardSize = 100;
 	final static int resolution = (boardSize) * 10;
 	final int fps = 25;
 	PointType[][] board = new PointType[boardSize][boardSize];
-	DriverControl[] drivers = {
-			new DriverControl(new Driver(new Point(boardSize / 2, 10), Driver.Direction.DOWN), KeyEvent.VK_UP, KeyEvent.VK_DOWN,
-					KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT),
-			new DriverControl(new Driver(new Point(boardSize / 2, boardSize - 10), Driver.Direction.UP), KeyEvent.VK_W,
-					KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D) };
+	DriverController[] drivers = {
+			new DriverController(new Driver(new Point(boardSize / 2, 10), Driver.Direction.DOWN), KeyEvent.VK_UP,
+					KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT),
+			new DriverController(new Driver(new Point(boardSize / 2, boardSize - 10), Driver.Direction.UP),
+					KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D) };
 	static JLayeredPane panel = new JLayeredPane();
 	Timer ticker = new Timer(1000 / fps, (e) -> refresh());
 	int timeBetweenBonus = 1500;
-	Timer tickerBonus = new Timer(timeBetweenBonus, (e) -> spawnBonus());
+	Timer tickerBonus = new Timer(timeBetweenBonus, (e) -> BonusSpawner.createBonusForBoard(board));
 	static ArrayList<Bonus> bonuses = new ArrayList<Bonus>();
 	static ArrayList<MenuButton> buttons = new ArrayList<MenuButton>();
 	static String background = "bg2.png";
@@ -53,18 +53,23 @@ class GameLoop extends JFrame {
 	}
 
 	private void createMenu() {
+		MenuColor m = new MenuColor(drivers, this,
+				new Point(GameLoop.resolution / 3 - 100, GameLoop.resolution / 2 - 150), buttons);
+		m.doneButton.addActionListener((e)->switchMenu(m));
+		GameLoop.buttons.remove(GameLoop.buttons.size() - 1);
+		MenuButton.location -=100;
 		new MenuButton("Start", this, (e) -> MenuButton.startGame(ticker, tickerBonus, drivers));
 		MenuButton p = new MenuButton("Wy³¹cz bonus", this, (e) -> {
 		});
 		p.addActionListener((e) -> p.switchBonus());
-		new MenuButton("Kolory graczy", this, (e) -> MenuButton.switchMenuColor());
+		new MenuButton("Kolory graczy", this, (e) -> switchMenu(m));
 		new MenuButton("Zmieñ t³o", this, (e) -> MenuButton.switchBg());
 		new MenuButton("Wyjœcie", this, (e) -> System.exit(0));
-		new MenuColor(drivers, this);
+
 	}
 
 	private void refresh() {
-		for (DriverControl dc : drivers) {
+		for (DriverController dc : drivers) {
 			tickBonus(dc.d.reverseSteering);
 			tickBonus(dc.d.untouchable);
 			tickBonus(dc.d.speed);
@@ -76,6 +81,10 @@ class GameLoop extends JFrame {
 				checkBoardPoint(dc);
 			}
 		}
+	}
+
+	public static void addKeyListenerToPanel(KeyListener listner) {
+		panel.addKeyListener(listner);
 	}
 
 	private void returnToMenu() {
@@ -101,29 +110,12 @@ class GameLoop extends JFrame {
 		GameLoop.panel.addKeyListener(createSpaceListener(continuation));
 	}
 
-	// u¿yj polimorfizmu 
-	private void spawnBonus() {
-		int t = ThreadLocalRandom.current().nextInt(1, 4);
-		int x = ThreadLocalRandom.current().nextInt(1, GameLoop.boardSize - 1);
-		int y = ThreadLocalRandom.current().nextInt(1, GameLoop.boardSize - 1);
-		switch (t) {
-		case 1:
-			new Bonus(new Point(x, y), board, PointType.REVERSE_STEERING);
-			break;
-		case 2:
-			new Bonus(new Point(x, y), board, PointType.UNTOUCHABLE);
-			break;
-		case 3:
-			new Bonus(new Point(x, y), board, PointType.SPEED);
-			break;
-		}
-	}
-
-	private void checkBoardPoint(DriverControl dc) {
+	private void checkBoardPoint(DriverController dc) {
 		if (collison(dc.d)) {
 			ticker.stop();
 			tickerBonus.stop();
 			createEndgameScreen();
+			// Bonusy jako klasy
 		} else if (isOnReverseSteeringBonus(dc)) {
 			activateBonus(dc.d.reverseSteering, 75, dc.d.location);
 		} else if (isOnUntouchableBonus(dc)) {
@@ -187,7 +179,7 @@ class GameLoop extends JFrame {
 	}
 
 	private void deactivateBonuses() {
-		for (DriverControl s : drivers) {
+		for (DriverController s : drivers) {
 			s.d.reverseSteering.active = false;
 			s.d.untouchable.active = false;
 			s.d.speed.active = false;
@@ -205,27 +197,39 @@ class GameLoop extends JFrame {
 		}
 	}
 
+	private void switchMenu(MenuColor m) {
+		for (MenuButton p : buttons) {
+			p.setVisible(true);
+		}
+		for (ColorButton p : m.colorButtons) {
+			p.setVisible(false);
+		}
+		m.doneButton.setVisible(false);
+	}
+
 	private void draw(Point p, ImageIcon ic, Integer i) {
 		JLabel lImage = new JLabel(ic);
 		lImage.setBounds(10 * p.x, 10 * p.y, 10, 10);
 		GameLoop.panel.add(lImage, i);
 	}
 
-	private boolean isOnSpeedBonus(DriverControl dc) {
+	// Spróbuj gdzieœ wyrzuciæ (do DriverControla?) te cztery metodki
+	private boolean isOnSpeedBonus(DriverController dc) {
 		return board[dc.d.location.x][dc.d.location.y] == PointType.SPEED
 				|| board[dc.d.location.x][dc.d.location.y] == PointType.SPEED_ON_LINE;
 	}
 
-	private boolean isOnUntouchableBonus(DriverControl dc) {
+	private boolean isOnUntouchableBonus(DriverController dc) {
 		return board[dc.d.location.x][dc.d.location.y] == PointType.UNTOUCHABLE
 				|| board[dc.d.location.x][dc.d.location.y] == PointType.UNTOUCHABLE_ON_LINE;
 	}
 
-	private boolean isOnReverseSteeringBonus(DriverControl dc) {
+	private boolean isOnReverseSteeringBonus(DriverController dc) {
 		return board[dc.d.location.x][dc.d.location.y] == PointType.REVERSE_STEERING
 				|| board[dc.d.location.x][dc.d.location.y] == PointType.REVERSE_STEERING_ON_LINE;
 	}
 
+	// Kolizje sprawdzaj w drivercontrolu
 	private boolean collison(Driver p) {
 		return p.location.x == boardSize || p.location.x == -1 || p.location.y == boardSize || p.location.y == -1
 				|| (board[p.location.x][p.location.y] == PointType.LINE && !(p.untouchable.active));

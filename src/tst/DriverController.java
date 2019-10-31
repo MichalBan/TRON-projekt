@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 
-public class DriverControl implements KeyListener {
+public class DriverController implements KeyListener {
 	enum ImageSet {
 		YELLOW(0), CYAN(7), RED(14);
 
@@ -22,7 +22,7 @@ public class DriverControl implements KeyListener {
 	int codeRIGHT;
 	Driver d;
 
-	DriverControl(Driver d, int up, int down, int left, int right) {
+	public DriverController(Driver d, int up, int down, int left, int right) {
 		this.d = d;
 		codeUP = up;
 		codeDOWN = down;
