@@ -19,8 +19,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 class GameLoop extends JFrame {
-
-
 	final static int boardSize = 100;
 	final static int resolution = (boardSize) * 10;
 	final int fps = 25;
@@ -72,9 +70,9 @@ class GameLoop extends JFrame {
 			tickBonus(dc.d.speed);
 			for (int i = dc.d.speed.active ? 2 : 1; i > 0; --i) {
 				board[dc.d.location.x][dc.d.location.y] = PointType.LINE;
-				draw(dc.d.location, dc.adjustTraceColor(), new Integer(3));
+				draw(dc.d.location, dc.adjustTraceColor(), Integer.valueOf(3));
 				dc.drive();
-				draw(dc.d.location, dc.adjustDriver(), new Integer(2));
+				draw(dc.d.location, dc.adjustDriver(), Integer.valueOf(2));
 				checkBoardPoint(dc);
 			}
 		}
@@ -99,10 +97,11 @@ class GameLoop extends JFrame {
 		continuation.setForeground(Color.WHITE);
 		continuation.setFont(new Font("Arial", Font.PLAIN, 50));
 		continuation.setBounds(0, 0, resolution, resolution);
-		GameLoop.panel.add(continuation, new Integer(4));
+		GameLoop.panel.add(continuation, Integer.valueOf(4));
 		GameLoop.panel.addKeyListener(createSpaceListener(continuation));
 	}
 
+	// u¿yj polimorfizmu 
 	private void spawnBonus() {
 		int t = ThreadLocalRandom.current().nextInt(1, 4);
 		int x = ThreadLocalRandom.current().nextInt(1, GameLoop.boardSize - 1);
@@ -138,7 +137,7 @@ class GameLoop extends JFrame {
 		GameLoop.panel.removeAll();
 		JLabel lBg = new JLabel(new ImageIcon(background));
 		lBg.setBounds(0, 0, resolution, resolution);
-		GameLoop.panel.add(lBg, new Integer(0));
+		GameLoop.panel.add(lBg, Integer.valueOf(0));
 	}
 
 	private void activateBonus(Driver.BonusTimer bt, int time, Point p) {
