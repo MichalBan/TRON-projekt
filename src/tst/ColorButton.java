@@ -8,7 +8,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
-
+/**
+ * klasa reprezentuje przycisk do wyboru koloru gracza
+ * tworza one alternatywy rozlaczne dla kazdego gracza
+ */
 public class ColorButton extends JRadioButton {
 	public ColorButton(Point location, JFrame f, String s, ActionListener a) {
 		super(s);
