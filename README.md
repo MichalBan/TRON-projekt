@@ -14,9 +14,15 @@ Changelog
   27.10.2019
     dodano bonusy
   02.11.2019
-    ostateczna refaktoryzacja kodu
+    refaktoryzacja kodu
+  09.11.2019
+    hotfix - gra powinna działać w systemach innych niż winowows i polskie litery powinny działać
+  16.11.2019
+    refaktoryzacja kodu zgodnie z zaleceniami
+  17.11.2019
+    wprowadzenie obsługi kompilacji, uruchomienia i testów przez mavena
 Instrukcja budowy i uruchomienia
   Program został stworzony na windowsie z użyciem jdk-11.0.4+11
   By zbudować należy uruchomić plik kompilacja.bat
   By uruchomić należy uruchomić plik uruchomienie.bat
-  Testy znajdują się w katalogu tst w pliku GameTests.java i wymagają frameworka junit
+  By przetestować należy uruchomić plik testy.bat
