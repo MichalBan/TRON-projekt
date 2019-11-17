@@ -1,4 +1,4 @@
-package tst;
+package elka.PROZ.TRONopodobne.view;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,11 +8,18 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
+
 /**
- * klasa reprezentuje przycisk do wyboru koloru gracza
- * tworza one alternatywy rozlaczne dla kazdego gracza
+ * Single radio button which appears in driver color choice menu
  */
 public class ColorButton extends JRadioButton {
+	/**
+	 * 
+	 * @param location Location of button in frame
+	 * @param f frame the button is added to
+	 * @param s text on the button
+	 * @param a action listener which handles clicks of the button
+	 */
 	public ColorButton(Point location, JFrame f, String s, ActionListener a) {
 		super(s);
 		this.setFont(new Font("Arial", Font.PLAIN, 30));
@@ -21,7 +28,7 @@ public class ColorButton extends JRadioButton {
 		this.setBorderPainted(true);
 		this.setBackground(Color.BLACK);
 		this.setForeground(Color.CYAN);
-		this.addActionListener(a);	
+		this.addActionListener(a);
 		f.add(this);
 		this.setVisible(false);
 	}

@@ -1,1 +1,0 @@
-java tst/GameWindow

@@ -1,43 +1,25 @@
-package tst;
+package elka.PROZ.TRONopodobne.model;
 
 import java.awt.Point;
 
 /**
- * klasa reprezentujaca postac gracza
- * nie zawiera logiki tylko dane
+ * represents player in game. Controlled by DriverController
  */
 public class Driver {
-	static enum Direction {
-		DOWN, UP, LEFT, RIGHT
-	};
-
-	static enum DColor {
-		YELLOW, CYAN, RED
-	};
 
 	private Point location;
 	private Direction direction;
 	private Direction previousDirection;
-	private DColor driverColor = DColor.YELLOW;
+	private DriverColor driverColor = DriverColor.YELLOW;
 
 	/**
-	 * Driver przechowuje informacje o wszystkich aktywnych na nim bonusach
+	 * Driver stores information about all his active bonuses
 	 */
-	class BonusTimer {
-		boolean active;
-		int time;
-
-		BonusTimer(boolean a, int t) {
-			active = a;
-			time = t;
-		}
-	}
-
 	private BonusTimer reverseSteering = new BonusTimer(false, 0);
 	private BonusTimer untouchable = new BonusTimer(false, 0);
 	private BonusTimer speed = new BonusTimer(false, 0);
 
-	Driver(Point p, Direction k) {
+	public Driver(Point p, Direction k) {
 		location = p;
 		this.direction = k;
 		this.previousDirection = k;
@@ -67,11 +49,11 @@ public class Driver {
 		this.previousDirection = previousDirection;
 	}
 
-	public DColor getDriverColor() {
+	public DriverColor getDriverColor() {
 		return driverColor;
 	}
 
-	public void setDriverColor(DColor driverColor) {
+	public void setDriverColor(DriverColor driverColor) {
 		this.driverColor = driverColor;
 	}
 

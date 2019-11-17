@@ -1,0 +1,1 @@
+java -jar target/TRONopodobne-1.0.jar
