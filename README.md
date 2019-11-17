@@ -1,28 +1,28 @@
 Opis aplikacji - TRONopodebne
-  Gra inspirowana gr¹ arkadow¹ TRON z ozdobami i now¹ mechanik¹ - bonusy.
-  Podstaw¹ rozgrywki jest poruszanie siê postaci gracza po kwadratowej planszy i zostawianie za sob¹ œladu œmiertelnego przy zderzeniu.
-  Dwóch graczy znajduje siê na planszy jednoczeœnie i zarówno wjechanie we w³asny œlad jak i przeciwnika koñczy siê pora¿k¹.
-  Wygrywa osoba która d³u¿ej utrzyma siê przy ¿yciu.
+  Gra inspirowana grÄ… arkadowÄ… TRON z ozdobami i nowÄ… mechanikÄ… - bonusy.
+  PodstawÄ… rozgrywki jest poruszanie siÄ™ postaci gracza po kwadratowej planszy i zostawianie za sobÄ… Å›ladu Å›miertelnego przy zderzeniu.
+  DwÃ³ch graczy znajduje siÄ™ na planszy jednoczeÅ›nie i zarÃ³wno wjechanie we wÅ‚asny Å›lad jak i przeciwnika koÅ„czy siÄ™ poraÅ¼kÄ….
+  Wygrywa osoba ktÃ³ra dÅ‚uÅ¼ej utrzyma siÄ™ przy Å¼yciu.
 Changelog
   17.10.2019
     pierwsza grywalna wersja
   20.10.2019
-    dodano modele linii dopasowuj¹ce siê do drogi - proste i zakrêty
-    dodano opcjê zmiany t³a
+    dodano modele linii dopasowujÄ…ce siÄ™ do drogi - proste i zakrÄ™ty
+    dodano opcjÄ™ zmiany tÅ‚a
   23.10.2019
-    dodano opcjê wyboru koloru gracza
+    dodano opcjÄ™ wyboru koloru gracza
   27.10.2019
     dodano bonusy
   02.11.2019
     refaktoryzacja kodu
   09.11.2019
-    hotfix - gra powinna dzia³aæ w systemach innych ni¿ winowows i polskie litery powinny dzia³aæ
+    hotfix - gra powinna dziaÅ‚aÄ‡ w systemach innych niÅ¼ winowows i polskie litery powinny dziaÅ‚aÄ‡
   16.11.2019
     refaktoryzacja kodu zgodnie z zaleceniami
   17.11.2019
-    wprowadzenie obs³ugi kompilacji, uruchomienia i testów przez mavena
+    wprowadzenie obsÅ‚ugi kompilacji, uruchomienia i testÃ³w przez mavena
 Instrukcja budowy i uruchomienia
-  Program zosta³ stworzony na windowsie z u¿yciem jdk-11.0.4+11
-  By zbudowaæ nale¿y uruchomiæ plik kompilacja.bat
-  By uruchomiæ nale¿y uruchomiæ plik uruchomienie.bat
-  By przetestowaæ nale¿y uruchomiæ plik testy.bat
+  Program zostaÅ‚ stworzony na windowsie z uÅ¼yciem jdk-11.0.4+11m wymaga mavena
+  By zbudowaÄ‡ naleÅ¼y uruchomiÄ‡ plik kompilacja.bat lub kompilacja.sh
+  By uruchomiÄ‡ naleÅ¼y uruchomiÄ‡ plik uruchomienie.bat lub uruchomienie.sh
+  By przetestowaÄ‡ naleÅ¼y uruchomiÄ‡ plik testy.bat lub testy.sh
